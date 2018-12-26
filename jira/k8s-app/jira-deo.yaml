@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jira-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jira-svc
+  template:
+    metadata:
+      labels:
+        app: jira-svc
+    spec:
+      containers:
+        - name: jira-svc
+          image: registry.cn-hangzhou.aliyuncs.com/mypaas/jira:7.13.0
+          imagePullPolicy: Always
+          env:
+          - name: JVM_XMX
+            value: "8192m"
+          - name: JVM_XMS
+            value: "8192m"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - mountPath: "/var/atlassian/jira"
+            name: jira-data         
+      volumes:
+      - name: jira-data
+        persistentVolumeClaim:
+          claimName: jira-data          
