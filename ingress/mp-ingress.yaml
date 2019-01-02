@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx-prod
+  name: mp-prod
+  namespace: prod
+spec:
+  rules:
+    - host: mp.xxx.com.cn
+      http:
+        paths:
+          - backend:
+              serviceName: modeling-platform
+              servicePort: 80
+  tls:
+    - hosts:
+        - mp.xxx.com.cn
+      secretName: xxx.com.cn
+status:
+  loadBalancer:
+    ingress:
+    - ip: xxx     

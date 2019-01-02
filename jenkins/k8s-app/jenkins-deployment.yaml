@@ -16,7 +16,7 @@ spec:
       containers:
       - name: jenkins
         image: registry.cn-hangzhou.aliyuncs.com/mypaas/jenkins2:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: web
@@ -56,7 +56,7 @@ spec:
               resource: limits.memory
               divisor: 1Mi
         - name: JAVA_OPTS
-          value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Duser.timezone=Asia/Shanghai
+          value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Djenkins.install.runSetupWizard=false -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Duser.timezone=Asia/Shanghai
       securityContext:
         fsGroup: 1000
       volumes:
